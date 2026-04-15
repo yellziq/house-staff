@@ -153,7 +153,7 @@ const writeData = (data: AppData): void => {
 
 const sendJson = (res: ServerResponse, statusCode: number, payload: unknown): void => {
   res.writeHead(statusCode, {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json; charset=utf-8',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
@@ -227,6 +227,21 @@ const server = http.createServer(async (req: IncomingMessage, res: ServerRespons
 
   if (req.method === 'GET' && url.pathname === '/api/staff') {
     sendJson(res, 200, { items: staffCatalog });
+    return;
+  }
+
+  if (req.method === 'GET' && url.pathname === '/api/profile') {
+    const authUser = getAuthUser(req);
+
+    if (!authUser) {
+      sendJson(res, 401, { message: 'Нужна авторизация.' });
+      return;
+    }
+
+    sendJson(res, 200, {
+      token: `demo-token-${authUser.id}`,
+      user: serializeUser(authUser),
+    });
     return;
   }
 
