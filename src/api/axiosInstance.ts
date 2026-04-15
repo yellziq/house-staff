@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { store } from '../store';
+import { logoutAndResetUserData } from '../store/slices/favoritesSlice';
 import { settingsSlice } from '../store/slices/settingsSlice';
 
 const api = axios.create({
@@ -24,6 +25,9 @@ api.interceptors.response.use(
   },
   (error) => {
     store.dispatch(settingsSlice.actions.setLoading(false));
+    if (error.response?.status === 401 && store.getState().user.isAuth) {
+      store.dispatch(logoutAndResetUserData());
+    }
     store.dispatch(
       settingsSlice.actions.setError(error.response?.data?.message || error.message || 'Request failed.'),
     );

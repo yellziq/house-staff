@@ -2,7 +2,8 @@ import { FC, ReactNode, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { homeStaffApi } from '../api/homeStaffApi';
 import { UnauthorizedPage } from '../pages/UnauthorizedPage';
-import { RootState } from '../store';
+import type { AppDispatch, RootState } from '../store';
+import { logoutAndResetUserData } from '../store/slices/favoritesSlice';
 import { userSlice } from '../store/slices/userSlice';
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
 }
 
 export const AuthWrapper: FC<Props> = ({ children }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
   const [isChecking, setIsChecking] = useState(isAuth);
 
@@ -34,6 +35,7 @@ export const AuthWrapper: FC<Props> = ({ children }) => {
       })
       .catch(() => {
         if (active) {
+          dispatch(logoutAndResetUserData());
           setIsChecking(false);
         }
       });
