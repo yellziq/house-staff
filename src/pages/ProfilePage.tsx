@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { homeStaffApi } from '../api/homeStaffApi';
 import { Layout } from '../components/Layout';
 import type { RootState } from '../store';
+import { favoritesSlice } from '../store/slices/favoritesSlice';
+import { ordersSlice } from '../store/slices/ordersSlice';
 import { settingsSlice } from '../store/slices/settingsSlice';
 import { userSlice } from '../store/slices/userSlice';
 
@@ -92,6 +94,8 @@ export const ProfilePage: React.FC = () => {
             className="secondary-button"
             onClick={() => {
               dispatch(userSlice.actions.logout());
+              dispatch(favoritesSlice.actions.resetFavorites());
+              dispatch(ordersSlice.actions.resetOrders());
             }}
           >
             Выйти

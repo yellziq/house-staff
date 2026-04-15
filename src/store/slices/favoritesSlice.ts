@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { catalogSlice } from './catalogSlice';
-import { userSlice } from './userSlice';
 
 interface FavoritesState {
   ids: number[];
@@ -20,13 +18,8 @@ export const favoritesSlice = createSlice({
         ? state.ids.filter((id) => id !== action.payload)
         : [...state.ids, action.payload];
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(userSlice.actions.logout, (state) => {
+    resetFavorites: (state) => {
       state.ids = [];
-    });
-    builder.addCase(catalogSlice.actions.clearCatalog, (state) => {
-      state.ids = [];
-    });
+    },
   },
 });

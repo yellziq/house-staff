@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { userSlice } from './userSlice';
 
 export interface OrderItem {
   id: string;
@@ -32,10 +31,8 @@ export const ordersSlice = createSlice({
     removeOrder: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(userSlice.actions.logout, (state) => {
+    resetOrders: (state) => {
       state.items = [];
-    });
+    },
   },
 });
