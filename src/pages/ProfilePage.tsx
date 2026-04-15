@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { homeStaffApi } from '../api/homeStaffApi';
 import { Layout } from '../components/Layout';
-import type { RootState } from '../store';
-import { favoritesSlice } from '../store/slices/favoritesSlice';
-import { ordersSlice } from '../store/slices/ordersSlice';
+import type { AppDispatch, RootState } from '../store';
+import { logoutAndResetUserData } from '../store/slices/favoritesSlice';
 import { settingsSlice } from '../store/slices/settingsSlice';
 import { userSlice } from '../store/slices/userSlice';
 
 export const ProfilePage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.data);
   const [phone, setPhone] = useState(user?.phone || '');
   const [address, setAddress] = useState(user?.address || '');
@@ -93,9 +92,7 @@ export const ProfilePage: React.FC = () => {
           <button
             className="secondary-button"
             onClick={() => {
-              dispatch(userSlice.actions.logout());
-              dispatch(favoritesSlice.actions.resetFavorites());
-              dispatch(ordersSlice.actions.resetOrders());
+              dispatch(logoutAndResetUserData());
             }}
           >
             Выйти

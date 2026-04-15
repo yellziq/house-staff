@@ -1,4 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { AppDispatch } from '..';
+import { ordersSlice } from './ordersSlice';
+import { userSlice } from './userSlice';
 
 interface FavoritesState {
   ids: number[];
@@ -23,3 +26,9 @@ export const favoritesSlice = createSlice({
     },
   },
 });
+
+export const logoutAndResetUserData = () => (dispatch: AppDispatch) => {
+  dispatch(userSlice.actions.logout());
+  dispatch(favoritesSlice.actions.resetFavorites());
+  dispatch(ordersSlice.actions.resetOrders());
+};
