@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "client@homestaff.com",
+      "password": "demo123",
+      "role": "client",
+      "phone": "+7 (999) 123-45-67",
+      "address": "Москва, Пресненская набережная, 12",
+      "interests": [
+        "Няня",
+        "Домработница"
+      ]
+    },
+    {
+      "id": "2",
+      "email": "ansahakyann",
+      "password": "111111",
+      "role": "client",
+      "phone": "1111111",
+      "address": "1111",
+      "interests": [
+        "Домработница"
+      ]
+    },
+    {
+      "id": "3",
+      "email": "ф",
+      "password": "a",
+      "role": "client",
+      "phone": "ф",
+      "address": "ф",
+      "interests": [
+        "Домработница"
+      ]
+    }
+  ],
+  "orders": [
+    {
+      "id": "order-1",
+      "userId": "1",
+      "items": [
+        {
+          "id": 1,
+          "name": "Домработница: Анна Волкова",
+          "price": 140
+        }
+      ],
+      "createdAt": "2026-04-13T21:33:08.243Z"
+    },
+    {
+      "id": "order-2",
+      "userId": "2",
+      "items": [
+        {
+          "id": 1,
+          "name": "Домработница: Анна Волкова",
+          "price": 140
+        }
+      ],
+      "createdAt": "2026-04-13T21:52:01.530Z"
+    },
+    {
+      "id": "order-3",
+      "userId": "1",
+      "items": [
+        {
+          "id": 1,
+          "name": "Домработница: Анна Волкова",
+          "price": 140
+        }
+      ],
+      "createdAt": "2026-04-15T07:07:50.304Z"
+    }
+  ]
+}
