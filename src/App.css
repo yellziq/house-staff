@@ -138,6 +138,26 @@ label {
   color: var(--text-color-light);
 }
 
+.auth-guard {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.auth-guard-card {
+  width: min(100%, 460px);
+  padding: 28px;
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  background: var(--container-color);
+  box-shadow: 0 10px 24px hsla(25, 30%, 45%, 0.05);
+}
+
+.auth-guard-card > * + * {
+  margin-top: 14px;
+}
+
 /*=============== NAVIGATION ===============*/
 .nav-link {
   padding: 6px 0;

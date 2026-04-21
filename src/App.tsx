@@ -1,4 +1,4 @@
-import React from 'react';
+import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { AuthWrapper } from './hoc/AuthWrapper';
@@ -12,39 +12,33 @@ import { NotFound } from './pages/NotFound';
 import { ProfilePage } from './pages/ProfilePage';
 import { RegisterPage } from './pages/RegisterPage';
 import { StaffPage } from './pages/StaffPage';
+import { store } from './store';
+import { ThemeProvider } from './theme/ThemeProvider';
 
-const App: React.FC = () => {
+function App() {
   return (
-    <BrowserRouter>
-      <CommonWrapper>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/catalog" element={<CatalogPage />} />
-          <Route path="/staff" element={<StaffPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route
-            path="/profile"
-            element={
-              <AuthWrapper>
-                <ProfilePage />
-              </AuthWrapper>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <AuthWrapper>
-                <DashboardPage />
-              </AuthWrapper>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </CommonWrapper>
-    </BrowserRouter>
+    <Provider store={store}>
+      <ThemeProvider>
+        <CommonWrapper>
+          <AuthWrapper>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/catalog" element={<CatalogPage />} />
+                <Route path="/staff" element={<StaffPage />} />
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </AuthWrapper>
+        </CommonWrapper>
+      </ThemeProvider>
+    </Provider>
   );
-};
+}
 
 export default App;
