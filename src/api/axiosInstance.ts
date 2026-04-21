@@ -25,11 +25,24 @@ api.interceptors.response.use(
   },
   (error) => {
     store.dispatch(settingsSlice.actions.setLoading(false));
+
     if (error.response?.status === 401 && store.getState().user.isAuth) {
       store.dispatch(logoutAndResetUserData());
     }
+
+    const errorMessage =
+      error.response?.data?.message ||
+      (axios.isAxiosError(error) && !error.response
+        ? 'Не удалось связаться с сервером. Проверь, что backend запущен.'
+        : null) ||
+      (typeof error.message === 'string' && error.message.includes('TypeError')
+        ? 'Произошла сетевая ошибка. Проверь подключение к серверу.'
+        : null) ||
+      error.message ||
+      'Request failed.';
+
     store.dispatch(
-      settingsSlice.actions.setError(error.response?.data?.message || error.message || 'Request failed.'),
+      settingsSlice.actions.setError(errorMessage),
     );
     return Promise.reject(error);
   },

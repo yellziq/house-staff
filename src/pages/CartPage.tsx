@@ -48,11 +48,11 @@ export const CartPage: React.FC = () => {
           ) : (
             items.map((item) => (
               <article className="cart-item" key={`${item.id}-${item.name}`}>
-                <div>
+                <div className="cart-item-content">
                   <h3>{item.name}</h3>
                   <p>Бронирование услуги для дома</p>
                 </div>
-                <strong>{formatPrice(item.price)}</strong>
+                <strong className="cart-item-price">{formatPrice(item.price)}</strong>
               </article>
             ))
           )}

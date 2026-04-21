@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
 
 const navItems = [
-  { to: '/', label: 'Главная ' },
-  { to: '/catalog', label: 'Каталог ' },
-  { to: '/staff', label: 'Персонал ' },
-  { to: '/cart', label: 'Корзина ' },
-  { to: '/dashboard', label: 'Кабинет ' },
+  { to: '/', label: 'Главная' },
+  { to: '/catalog', label: 'Каталог' },
+  { to: '/staff', label: 'Персонал' },
+  { to: '/cart', label: 'Корзина' },
+  { to: '/dashboard', label: 'Кабинет' },
 ];
 
 export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
@@ -20,10 +20,9 @@ export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
       <header className="topbar">
         <Link className="brand" to="/">
           <span className="brand-mark">HS</span>
-          <span>
+          <span className="brand-text">
             <strong>Home Staff</strong>
-            
-            <small> Товары и персонал для дома</small>
+            <small>Товары и персонал для дома</small>
           </span>
         </Link>
 
@@ -62,11 +61,11 @@ export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
       <footer className="site-footer">
         <div>
           <strong>Home Staff</strong>
-          </div>
+        </div>
         <div className="footer-links">
-          <Link to="/catalog">Каталог </Link>
-          <Link to="/staff">Специалисты </Link>
-          <Link to="/cart">Корзина </Link>
+          <Link to="/catalog">Каталог</Link>
+          <Link to="/staff">Специалисты</Link>
+          <Link to="/cart">Корзина</Link>
         </div>
       </footer>
     </div>

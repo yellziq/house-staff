@@ -3,23 +3,24 @@
 
 :root {
   /* Переменные из нового стиля */
-  --first-color: hsl(31, 100%, 70%);
+  --first-color: hsl(33, 100%, 78%);
+  --first-color-soft: hsl(34, 100%, 92%);
   --button-color: hsl(0, 0%, 17%);
-  --button-color-alt: hsl(0, 0%, 21%);
+  --button-color-alt: hsl(0, 0%, 26%);
   --title-color: hsl(0, 0%, 15%);
   --text-color: hsl(0, 0%, 35%);
   --text-color-light: hsl(0, 0%, 55%);
-  --body-color: hsl(0, 0%, 99%);
+  --body-color: #fff;
   --container-color: #fff;
-  --border-color: hsl(0, 0%, 94%);
-  
+  --border-color: hsl(35, 45%, 91%);
+
   /* Твои шрифты */
   --body-font: 'Manrope', sans-serif;
   --title-font: 'Playfair Display', serif;
-  
+
   /* Твои базовые настройки сетки */
   --line: var(--border-color);
-  --shadow: 0 12px 32px hsla(0, 0%, 20%, .1);
+  --shadow: 0 14px 36px hsla(25, 35%, 35%, 0.1);
 }
 
 * {
@@ -34,7 +35,8 @@ body {
   font-family: var(--body-font);
   color: var(--text-color);
   background-color: var(--body-color);
-  transition: .4s;
+  line-height: 1.6;
+  transition: 0.4s;
 }
 
 a {
@@ -42,8 +44,24 @@ a {
   text-decoration: none;
 }
 
-button, input {
+button,
+input {
   font-family: var(--body-font);
+}
+
+h1,
+h2,
+h3 {
+  color: var(--title-color);
+  line-height: 1.2;
+}
+
+p,
+li,
+span,
+small,
+label {
+  line-height: 1.55;
 }
 
 /*=============== LAYOUT ===============*/
@@ -57,9 +75,12 @@ button, input {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
   padding: 12px 0 22px;
   margin-bottom: 24px;
   border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(6px);
 }
 
 .brand {
@@ -70,6 +91,20 @@ button, input {
   color: var(--title-color);
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-text small {
+  color: var(--text-color-light);
+  font-family: var(--body-font);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .brand-mark {
@@ -83,6 +118,26 @@ button, input {
   font-size: 14px;
 }
 
+.topnav,
+.topbar-actions,
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 28px 0 12px;
+  margin-top: 40px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-color-light);
+}
+
 /*=============== NAVIGATION ===============*/
 .nav-link {
   padding: 6px 0;
@@ -90,10 +145,11 @@ button, input {
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
-  transition: .3s;
+  transition: 0.3s;
 }
 
-.nav-link:hover, .nav-link-active {
+.nav-link:hover,
+.nav-link-active {
   color: var(--first-color);
 }
 
@@ -103,7 +159,73 @@ button, input {
   border: 1px solid var(--border-color);
   background: var(--container-color);
   font-size: 13px;
-  transition: .3s;
+  transition: 0.3s;
+}
+
+/*=============== SECTIONS & GRIDS ===============*/
+.hero,
+.cart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(300px, 0.85fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.hero-panel,
+.card-grid,
+.service-grid,
+.staff-list,
+.interest-grid,
+.cart-items {
+  display: grid;
+  gap: 20px;
+}
+
+.card-grid,
+.service-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.home-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.section-block,
+.staff-list {
+  margin-top: 28px;
+}
+
+.section-heading,
+.hero-actions,
+.modal-actions,
+.staff-card-footer,
+.staff-card-top,
+.staff-meta,
+.staff-row-main,
+.staff-row-meta,
+.summary-line,
+.service-meta,
+.auth-helper,
+.hero-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.section-heading {
+  margin-bottom: 20px;
+  align-items: end;
 }
 
 /*=============== HERO & CARDS ===============*/
@@ -113,27 +235,69 @@ button, input {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background-color: var(--first-color); /* Стиль фона из нового CSS */
-  border-radius: 0; /* В новом стиле более строгие углы, но оставим небольшие если хочешь */
+  background: linear-gradient(135deg, var(--first-color) 0%, hsl(36, 100%, 88%) 100%);
+  border-radius: 28px;
   position: relative;
   overflow: hidden;
   color: var(--title-color);
-}
-
-/* Карточки в стиле Featured/Products */
-.hero-panel-card, .page-intro, .auth-card, .info-card, 
-.summary-card, .staff-row, .staff-card, .service-card {
-  padding: 22px;
-  background-color: var(--container-color);
-  border: 1px solid var(--border-color);
-  transition: .3s;
-}
-
-.staff-card:hover, .service-card:hover, .hero-panel-card:hover {
   box-shadow: var(--shadow);
 }
 
-.hero h1, .page-intro h1 {
+.hero-copy::after {
+  content: '';
+  position: absolute;
+  inset: auto -60px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: hsla(0, 0%, 100%, 0.22);
+}
+
+.hero-copy > * + *,
+.hero-panel-card > * + *,
+.page-intro > * + *,
+.auth-card > * + *,
+.info-card > * + *,
+.summary-card > * + *,
+.service-card > * + *,
+.staff-card > * + * {
+  margin-top: 14px;
+}
+
+.hero-panel-card,
+.page-intro,
+.auth-card,
+.info-card,
+.summary-card,
+.staff-row,
+.staff-card,
+.service-card,
+.strip-card,
+.cart-item,
+.empty-state {
+  padding: 22px;
+  background-color: var(--container-color);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  box-shadow: 0 10px 24px hsla(25, 30%, 45%, 0.05);
+  transition: 0.3s;
+}
+
+.page-intro,
+.auth-card,
+.summary-card {
+  max-width: 760px;
+}
+
+.staff-card:hover,
+.service-card:hover,
+.hero-panel-card:hover {
+  box-shadow: 0 16px 30px hsla(25, 35%, 35%, 0.12);
+  transform: translateY(-2px);
+}
+
+.hero h1,
+.page-intro h1 {
   font-family: var(--title-font);
   color: var(--title-color);
   font-weight: 700;
@@ -147,61 +311,233 @@ button, input {
   font-weight: 600;
 }
 
+.hero-text,
+.modal-copy,
+.staff-description,
+.page-intro p:not(.eyebrow),
+.auth-card p:not(.eyebrow),
+.info-card p:not(.eyebrow) {
+  max-width: 62ch;
+}
+
+.feature-list {
+  padding-left: 18px;
+}
+
+.feature-list li + li {
+  margin-top: 8px;
+}
+
+.hero-stats {
+  align-items: stretch;
+  margin-top: 10px;
+}
+
+.hero-stats > div,
+.strip-card {
+  flex: 1 1 160px;
+}
+
+.hero-stats > div {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: hsla(0, 0%, 100%, 0.3);
+  backdrop-filter: blur(2px);
+}
+
+.hero-stats strong,
+.strip-card strong,
+.staff-card-footer strong,
+.summary-line strong {
+  display: block;
+  color: var(--title-color);
+}
+
+.strip-card span,
+.staff-role,
+.rating,
+.service-meta,
+.summary-line span,
+.staff-meta,
+.staff-row-meta,
+.auth-helper span,
+.empty-state p,
+.cart-item p {
+  color: var(--text-color-light);
+}
+
+.cart-layout {
+  margin-top: 28px;
+}
+
+.cart-items {
+  gap: 16px;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+}
+
+.cart-item-content {
+  display: grid;
+  gap: 6px;
+}
+
+.cart-item-price {
+  color: var(--title-color);
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.summary-card {
+  width: 100%;
+  position: sticky;
+  top: 24px;
+}
+
+.summary-card h3 {
+  margin-bottom: 6px;
+}
+
+.summary-line + .summary-line {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.staff-row-main {
+  align-items: start;
+}
+
 /*=============== BUTTONS ===============*/
-.primary-button, .primary-link, .custom-button {
-  display: inline-block;
-  background-color: var(--button-color);
-  color: #FFF;
-  padding: 1.25rem 2rem;
-  font-weight: 500;
-  border-radius: 0; /* В новом стиле кнопки прямоугольные */
-  transition: .3s;
+.primary-button,
+.primary-link,
+.custom-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--button-color) 0%, var(--button-color-alt) 100%);
+  color: #fff;
+  padding: 1rem 1.6rem;
+  font-weight: 600;
+  border-radius: 16px;
+  transition: 0.25s ease;
   cursor: pointer;
   text-align: center;
+  border: none;
+  box-shadow: 0 10px 20px hsla(0, 0%, 10%, 0.12);
 }
 
-.primary-button:hover {
-  background-color: var(--button-color-alt);
+.primary-button:hover,
+.primary-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px hsla(0, 0%, 10%, 0.16);
 }
 
-.secondary-button, .secondary-link, .ghost-link {
-  background-color: hsl(0, 0%, 75%);
+.secondary-button,
+.secondary-link,
+.ghost-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(35, 55%, 94%);
   color: var(--title-color);
-  padding: 1rem 1.5rem;
-  transition: .3s;
+  padding: 0.95rem 1.3rem;
+  transition: 0.25s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+  border-radius: 16px;
 }
 
-.secondary-button:hover {
-  background-color: hsl(0, 0%, 63%);
+.secondary-button:hover,
+.secondary-link:hover {
+  background-color: hsl(35, 70%, 90%);
+}
+
+.ghost-link,
+.text-link {
+  padding: 0;
+  background: transparent;
+}
+
+.ghost-link {
+  padding: 0.8rem 1rem;
+  border-color: var(--border-color);
+}
+
+.text-link {
+  color: var(--title-color);
+  font-weight: 600;
+}
+
+.text-link:hover,
+.ghost-link:hover {
+  color: var(--button-color-alt);
+}
+
+.summary-card .primary-button,
+.auth-card .primary-button,
+.auth-card .secondary-button {
+  width: 100%;
 }
 
 /*=============== FORMS ===============*/
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field span {
+  color: var(--title-color);
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .field input {
   width: 100%;
   padding: 1.25rem 1rem;
-  background-color: hsl(0, 0%, 94%);
-  border: none;
+  background-color: hsl(35, 55%, 96%);
+  border: 1px solid transparent;
   outline: none;
   color: var(--title-color);
+  border-radius: 16px;
+  transition: 0.25s ease;
 }
 
 .field input:focus {
-  background-color: var(--border-color);
+  background-color: #fff;
+  border-color: hsl(34, 80%, 82%);
+  box-shadow: 0 0 0 4px hsla(34, 100%, 78%, 0.18);
 }
 
 /*=============== MODALS & OVERLAYS ===============*/
+.preferences-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: hsla(0, 0%, 15%, 0.32);
+}
+
 .preferences-modal {
+  width: min(560px, 100%);
   background-color: var(--body-color);
   border: 1px solid var(--border-color);
   padding: 3.5rem 2rem;
-  box-shadow: -2px 0 4px hsla(0, 0%, 15%, .1);
+  box-shadow: -2px 0 4px hsla(0, 0%, 15%, 0.1);
 }
 
 .interest-chip {
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   border: 1px solid var(--border-color);
   background: var(--container-color);
-  transition: .3s;
+  transition: 0.3s;
+  cursor: pointer;
+  border-radius: 999px;
 }
 
 .interest-chip-active {
@@ -213,11 +549,12 @@ button, input {
 /*=============== BADGES & MISC ===============*/
 .badge {
   background-color: var(--first-color);
-  color: #fff;
-  padding: .5rem 1rem;
+  color: var(--title-color);
+  padding: 0.5rem 1rem;
   text-transform: uppercase;
   font-size: 10px;
   font-weight: 700;
+  border-radius: 999px;
 }
 
 .spinner {
@@ -227,7 +564,7 @@ button, input {
 
 .scroll-header {
   background-color: var(--body-color);
-  box-shadow: 0 1px 4px hsla(0, 4%, 15%, .10);
+  box-shadow: 0 1px 4px hsla(0, 4%, 15%, 0.1);
 }
 
 /*=============== ANIMATIONS ===============*/
@@ -236,15 +573,59 @@ button, input {
     opacity: 0;
     transform: translateY(1rem);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Адаптив из твоего кода с поправками под ширину нового */
+/*=============== RESPONSIVE ===============*/
 @media (max-width: 980px) {
-  .hero, .card-grid, .service-grid {
+  .hero,
+  .card-grid,
+  .service-grid,
+  .cart-layout {
     grid-template-columns: 1fr;
+  }
+
+  .summary-card {
+    position: static;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-shell {
+    width: min(100% - 24px, 1024px);
+    margin-top: 20px;
+  }
+
+  .hero-copy,
+  .hero-panel-card,
+  .page-intro,
+  .auth-card,
+  .info-card,
+  .summary-card,
+  .staff-row,
+  .staff-card,
+  .service-card,
+  .strip-card,
+  .cart-item,
+  .empty-state,
+  .preferences-modal {
+    padding: 20px;
+  }
+
+  .topbar {
+    padding-bottom: 18px;
+  }
+
+  .hero-copy {
+    min-height: auto;
+  }
+
+  .cart-item {
+    grid-template-columns: 1fr;
+    justify-items: start;
   }
 }

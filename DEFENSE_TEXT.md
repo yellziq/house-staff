@@ -27,7 +27,6 @@
 - `settingsSlice` управляет загрузкой и ошибками;
 - дополнительные slices: `catalogSlice`, `cartSlice`, `favoritesSlice`, `ordersSlice`.
 
-Также выполнено требование по взаимодействию между slices: `favoritesSlice` использует actions других slices через `extraReducers`.
 
 На уровне API реализованы все требуемые HTTP-методы:
 - `GET` для получения каталога, dashboard и списка заявок;
