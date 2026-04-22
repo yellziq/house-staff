@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { homeStaffApi } from '../api/homeStaffApi';
 import { Layout } from '../components/Layout';
 import type { RootState } from '../store';
+import { dashboardSlice } from '../store/slices/dashboardSlice';
 import { ordersSlice } from '../store/slices/ordersSlice';
 import { settingsSlice } from '../store/slices/settingsSlice';
 import { formatOrderDate } from '../utils/formatters';
@@ -10,49 +11,50 @@ import { formatOrderDate } from '../utils/formatters';
 export const DashboardPage: React.FC = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items);
-  const orders = useSelector((state: RootState) => state.orders.items);
+  const { items: orders, isLoaded: areOrdersLoaded } = useSelector(
+    (state: RootState) => state.orders,
+  );
+  const { summary, isLoaded: isDashboardLoaded } = useSelector(
+    (state: RootState) => state.dashboard,
+  );
   const user = useSelector((state: RootState) => state.user.data);
-  const [summary, setSummary] = useState({
-    activeOrders: 0,
-    favoriteCategory: 'Няни и домработницы',
-    responseTime: '24 часа',
-  });
 
   useEffect(() => {
     let active = true;
 
-    homeStaffApi
-      .getDashboard()
-      .then((data) => {
-        if (active) {
-          setSummary(data);
-        }
-      })
-      .catch(() => undefined);
+    if (!isDashboardLoaded) {
+      homeStaffApi
+        .getDashboard()
+        .then((data) => {
+          if (active) {
+            dispatch(dashboardSlice.actions.setSummary(data));
+          }
+        })
+        .catch(() => undefined);
+    }
 
-    homeStaffApi
-      .getOrders()
-      .then((items) => {
-        if (active) {
-          dispatch(ordersSlice.actions.setOrders(items));
-        }
-      })
-      .catch(() => undefined);
+    if (!areOrdersLoaded) {
+      homeStaffApi
+        .getOrders()
+        .then((items) => {
+          if (active) {
+            dispatch(ordersSlice.actions.setOrders(items));
+          }
+        })
+        .catch(() => undefined);
+    }
 
     return () => {
       active = false;
     };
-  }, [dispatch]);
+  }, [areOrdersLoaded, dispatch, isDashboardLoaded]);
 
   const handleDeleteOrder = async (orderId: string) => {
     try {
       const response = await homeStaffApi.deleteOrder(orderId);
       dispatch(ordersSlice.actions.removeOrder(orderId));
       dispatch(settingsSlice.actions.setError(response.message));
-      setSummary((current) => ({
-        ...current,
-        activeOrders: Math.max(0, current.activeOrders - 1),
-      }));
+      dispatch(dashboardSlice.actions.decrementActiveOrders());
     } catch (error) {
       return;
     }

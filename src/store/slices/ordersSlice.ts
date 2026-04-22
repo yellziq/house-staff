@@ -12,10 +12,12 @@ export interface OrderItem {
 
 interface OrdersState {
   items: OrderItem[];
+  isLoaded: boolean;
 }
 
 const initialState: OrdersState = {
   items: [],
+  isLoaded: false,
 };
 
 export const ordersSlice = createSlice({
@@ -24,15 +26,18 @@ export const ordersSlice = createSlice({
   reducers: {
     setOrders: (state, action: PayloadAction<OrderItem[]>) => {
       state.items = action.payload;
+      state.isLoaded = true;
     },
     addOrder: (state, action: PayloadAction<OrderItem>) => {
       state.items = [action.payload, ...state.items];
+      state.isLoaded = true;
     },
     removeOrder: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
     },
     resetOrders: (state) => {
       state.items = [];
+      state.isLoaded = false;
     },
   },
 });

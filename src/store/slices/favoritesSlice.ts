@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { AppDispatch } from '..';
+import { dashboardSlice } from './dashboardSlice';
 import { ordersSlice } from './ordersSlice';
 import { userSlice } from './userSlice';
 
@@ -29,6 +30,7 @@ export const favoritesSlice = createSlice({
 
 export const logoutAndResetUserData = () => (dispatch: AppDispatch) => {
   dispatch(userSlice.actions.logout());
+  dispatch(dashboardSlice.actions.resetDashboard());
   dispatch(favoritesSlice.actions.resetFavorites());
   dispatch(ordersSlice.actions.resetOrders());
 };

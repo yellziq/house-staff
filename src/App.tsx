@@ -19,9 +19,9 @@ function App() {
   return (
     <Provider store={store}>
       <ThemeProvider>
-        <CommonWrapper>
-          <AuthWrapper>
-            <BrowserRouter>
+        <BrowserRouter>
+          <CommonWrapper>
+            <AuthWrapper>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/catalog" element={<CatalogPage />} />
@@ -33,9 +33,9 @@ function App() {
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </BrowserRouter>
-          </AuthWrapper>
-        </CommonWrapper>
+            </AuthWrapper>
+          </CommonWrapper>
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   );

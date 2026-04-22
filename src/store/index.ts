@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { catalogSlice } from './slices/catalogSlice';
 import { cartSlice } from './slices/cartSlice';
+import { dashboardSlice } from './slices/dashboardSlice';
 import { favoritesSlice } from './slices/favoritesSlice';
 import { ordersSlice } from './slices/ordersSlice';
 import { settingsSlice } from './slices/settingsSlice';
@@ -10,6 +11,7 @@ export const store = configureStore({
   reducer: {
     catalog: catalogSlice.reducer,
     cart: cartSlice.reducer,
+    dashboard: dashboardSlice.reducer,
     favorites: favoritesSlice.reducer,
     orders: ordersSlice.reducer,
     settings: settingsSlice.reducer,
