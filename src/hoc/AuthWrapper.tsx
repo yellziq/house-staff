@@ -11,6 +11,19 @@ interface Props {
 
 const privatePaths = ['/profile', '/dashboard'];
 
+const UnauthorizedFallback: FC = () => (
+  <div className="auth-guard">
+    <div className="auth-guard-card">
+      <p className="eyebrow">401</p>
+      <h1>Доступ ограничен</h1>
+      <p>Эта страница доступна только авторизованным пользователям.</p>
+      <a className="primary-link" href="/login">
+        Перейти ко входу
+      </a>
+    </div>
+  </div>
+);
+
 export const AuthWrapper: FC<Props> = ({ children }) => {
   const dispatch = useDispatch<AppDispatch>();
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -72,18 +85,7 @@ export const AuthWrapper: FC<Props> = ({ children }) => {
   }, [dispatch, isAuth, isPrivateRoute]);
 
   if (isPrivateRoute && !isAuth) {
-    return (
-      <div className="auth-guard">
-        <div className="auth-guard-card">
-          <p className="eyebrow">401</p>
-          <h1>Доступ ограничен</h1>
-          <p>Эта страница доступна только авторизованным пользователям.</p>
-          <a className="primary-link" href="/login">
-            Перейти ко входу
-          </a>
-        </div>
-      </div>
-    );
+    return <UnauthorizedFallback />;
   }
 
   if (isPrivateRoute && isChecking) {
