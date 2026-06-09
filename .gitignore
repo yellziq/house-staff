@@ -10,6 +10,10 @@
 
 # production
 /build
+/.next
+
+# typescript
+tsconfig.tsbuildinfo
 
 # misc
 .DS_Store
