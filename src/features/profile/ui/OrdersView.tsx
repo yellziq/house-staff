@@ -11,18 +11,18 @@ export const OrdersView = observer((): ReactElement => {
   const { ordersStore, handleUnknownError } = rootStore;
 
   useEffect(() => {
-    ordersStore.loadOrders().catch(handleUnknownError);
+    ordersStore.async.loadOrders().catch(handleUnknownError);
   }, [ordersStore, handleUnknownError]);
 
   return (
     <section className="cart-items">
-      {ordersStore.orders.length === 0 ? (
+      {ordersStore.sync.getOrders().length === 0 ? (
         <div className="empty-state">
           <h3>История пока пустая</h3>
           <p>Здесь появятся данные, полученные с сервера после авторизации.</p>
         </div>
       ) : (
-        ordersStore.orders.map((order) => (
+        ordersStore.sync.getOrders().map((order) => (
           <article className="cart-item" key={order.id}>
             <div>
               <h3>{order.id}</h3>

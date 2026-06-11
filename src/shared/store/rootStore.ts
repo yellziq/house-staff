@@ -1,13 +1,12 @@
 'use client';
 
-import { makeAutoObservable } from 'mobx';
 import { toApiError } from '@shared/api/client';
-import { UiStore } from '@shared/store/stores/uiStore';
-import { CartStore } from '@shared/store/stores/cartStore';
-import { CatalogStore } from '@shared/store/stores/catalogStore';
-import { DashboardStore } from '@shared/store/stores/dashboardStore';
-import { OrdersStore } from '@shared/store/stores/ordersStore';
-import { UserStore } from '@shared/store/stores/userStore';
+import { UiStore, uiStore } from '@shared/store/stores/uiStore';
+import { CartStore, cartStore } from '@shared/store/stores/cartStore';
+import { CatalogStore, catalogStore } from '@shared/store/stores/catalogStore';
+import { DashboardStore, dashboardStore } from '@shared/store/stores/dashboardStore';
+import { OrdersStore, ordersStore } from '@shared/store/stores/ordersStore';
+import { UserStore, userStore } from '@shared/store/stores/userStore';
 
 export class RootStore {
   userStore: UserStore;
@@ -17,19 +16,32 @@ export class RootStore {
   dashboardStore: DashboardStore;
   uiStore: UiStore;
 
-  constructor() {
-    this.userStore = new UserStore();
-    this.catalogStore = new CatalogStore();
-    this.cartStore = new CartStore();
-    this.ordersStore = new OrdersStore();
-    this.dashboardStore = new DashboardStore();
-    this.uiStore = new UiStore();
-    makeAutoObservable(this, {}, { autoBind: true });
+  constructor(
+    userStore: UserStore,
+    catalogStore: CatalogStore,
+    cartStore: CartStore,
+    ordersStore: OrdersStore,
+    dashboardStore: DashboardStore,
+    uiStore: UiStore,
+  ) {
+    this.userStore = userStore;
+    this.catalogStore = catalogStore;
+    this.cartStore = cartStore;
+    this.ordersStore = ordersStore;
+    this.dashboardStore = dashboardStore;
+    this.uiStore = uiStore;
   }
 
   handleUnknownError(error: unknown): void {
-    this.uiStore.setError(toApiError(error).message);
+    this.uiStore.sync.setError(toApiError(error).message);
   }
 }
 
-export const rootStore = new RootStore();
+export const rootStore = new RootStore(
+  userStore,
+  catalogStore,
+  cartStore,
+  ordersStore,
+  dashboardStore,
+  uiStore,
+);

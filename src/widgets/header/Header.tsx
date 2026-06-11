@@ -43,9 +43,9 @@ export const Header = observer((): ReactElement => {
 
       <div className="topbar-actions">
         <Link className="cart-pill" href="/cart">
-          Корзина: {cartStore.items.length}
+          Корзина: {cartStore.sync.getItems().length}
         </Link>
-        {userStore.isAuth ? (
+        {userStore.sync.getIsAuth() ? (
           <Link className="ghost-link" href="/profile">
             Профиль
           </Link>

@@ -9,6 +9,7 @@ import { homeStaffApi } from '@shared/api/homeStaffApi';
 import { rootStore } from '@shared/store/rootStore';
 import { Button } from '@shared/ui/Button';
 
+
 const interestOptions = [
   'Домработница',
   'Няня',
@@ -38,7 +39,7 @@ export const RegisterForm = observer((): ReactElement => {
 
   const handleOpenPreferences = (): void => {
     if (!email || !password || !phone || !address) {
-      uiStore.setError('Сначала заполните все поля регистрации.');
+      uiStore.sync.setError('Сначала заполните все поля регистрации.');
       return;
     }
 
@@ -54,8 +55,8 @@ export const RegisterForm = observer((): ReactElement => {
         address,
         interests: selectedInterests,
       });
-      userStore.setAuth(response);
-      uiStore.setMessage('Аккаунт успешно создан.');
+      userStore.sync.setAuth(response);
+      uiStore.sync.setMessage('Аккаунт успешно создан.');
       router.push('/dashboard');
     } catch (error) {
       handleUnknownError(error);

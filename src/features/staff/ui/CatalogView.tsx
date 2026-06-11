@@ -9,6 +9,7 @@ import { formatPrice } from '@shared/lib/formatters';
 import { rootStore } from '@shared/store/rootStore';
 import { Button } from '@shared/ui/Button';
 
+
 interface ServiceGroup {
   count: number;
   minPrice: number;
@@ -20,10 +21,10 @@ export const CatalogView = observer((): ReactElement => {
   const { catalogStore, handleUnknownError } = rootStore;
 
   useEffect(() => {
-    catalogStore.loadStaff().catch(handleUnknownError);
+    catalogStore.async.loadStaff().catch(handleUnknownError);
   }, [catalogStore, handleUnknownError]);
 
-  const serviceGroups = catalogStore.staff.reduce<Record<string, ServiceGroup>>((acc, member) => {
+  const serviceGroups = catalogStore.sync.getStaff().reduce<Record<string, ServiceGroup>>((acc, member) => {
     const current = acc[member.role];
     if (!current) {
       acc[member.role] = {
@@ -41,7 +42,7 @@ export const CatalogView = observer((): ReactElement => {
 
   return (
     <section className="service-grid">
-      {!catalogStore.isLoaded ? <div className="empty-state">Загружаем каталог...</div> : null}
+      {!catalogStore.sync.getIsLoaded() ? <div className="empty-state">Загружаем каталог...</div> : null}
       {Object.entries(serviceGroups).map(([role, info]) => (
         <article className="service-card" key={role}>
           <span className="badge">Услуга</span>
@@ -53,7 +54,7 @@ export const CatalogView = observer((): ReactElement => {
           </div>
           <Button
             onClick={() => {
-              catalogStore.setActiveCategory(role);
+              catalogStore.sync.setActiveCategory(role);
               router.push('/staff');
             }}
           >

@@ -10,6 +10,7 @@ import { homeStaffApi } from '@shared/api/homeStaffApi';
 import { rootStore } from '@shared/store/rootStore';
 import { Button } from '@shared/ui/Button';
 
+
 export const LoginForm = observer((): ReactElement => {
   const router = useRouter();
   const { userStore, uiStore, handleUnknownError } = rootStore;
@@ -19,8 +20,8 @@ export const LoginForm = observer((): ReactElement => {
   const handleLogin = async (): Promise<void> => {
     try {
       const response = await homeStaffApi.login({ email, password });
-      userStore.setAuth(response);
-      uiStore.setMessage('Вы успешно вошли в аккаунт.');
+      userStore.sync.setAuth(response);
+      uiStore.sync.setMessage('Вы успешно вошли в аккаунт.');
       router.push('/dashboard');
     } catch (error) {
       handleUnknownError(error);

@@ -8,12 +8,13 @@ import { formatPrice } from '@shared/lib/formatters';
 import { rootStore } from '@shared/store/rootStore';
 import { Button } from '@shared/ui/Button';
 
+
 export const StaffListView = observer((): ReactElement => {
   const { catalogStore, cartStore, uiStore, handleUnknownError } = rootStore;
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
 
   useEffect(() => {
-    catalogStore.loadStaff().catch(handleUnknownError);
+    catalogStore.async.loadStaff().catch(handleUnknownError);
   }, [catalogStore, handleUnknownError]);
 
   const toggleFavorite = (id: number): void => {
@@ -24,16 +25,16 @@ export const StaffListView = observer((): ReactElement => {
 
   return (
     <section className="staff-list">
-      {!catalogStore.isLoaded ? <div className="empty-state">Загружаем специалистов...</div> : null}
-      {catalogStore.activeCategory ? (
+      {!catalogStore.sync.getIsLoaded() ? <div className="empty-state">Загружаем специалистов...</div> : null}
+      {catalogStore.sync.getActiveCategory() ? (
         <div className="active-filter">
-          <span>Выбранная категория: {catalogStore.activeCategory}</span>
-          <Button variant="secondary" onClick={() => catalogStore.setActiveCategory(null)}>
+          <span>Выбранная категория: {catalogStore.sync.getActiveCategory()}</span>
+          <Button variant="secondary" onClick={() => catalogStore.sync.setActiveCategory(null)}>
             Сбросить фильтр
           </Button>
         </div>
       ) : null}
-      {catalogStore.filteredStaff.map((member) => (
+      {catalogStore.sync.getFilteredStaff().map((member) => (
         <article className="staff-row" key={member.id}>
           <div className="staff-row-main">
             <span className="badge">{member.badge}</span>
@@ -50,12 +51,12 @@ export const StaffListView = observer((): ReactElement => {
             <strong>{formatPrice(member.price)}</strong>
             <Button
               onClick={() => {
-                cartStore.add({
+                cartStore.sync.add({
                   id: member.id,
                   name: `${member.role}: ${member.name}`,
                   price: member.price,
                 });
-                uiStore.setMessage(`Бронирование для ${member.name} добавлено в корзину.`);
+                uiStore.sync.setMessage(`Бронирование для ${member.name} добавлено в корзину.`);
               }}
             >
               Забронировать

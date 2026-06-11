@@ -12,10 +12,10 @@ export const CommonWrapper = observer(({ children }: PropsWithChildren): ReactEl
   return (
     <>
       {children}
-      {uiStore.message || uiStore.error ? (
-        <div className={uiStore.error ? 'toast toast-error' : 'toast'} role="status">
-          <span>{uiStore.error || uiStore.message}</span>
-          <button aria-label="Закрыть уведомление" onClick={() => uiStore.clear()} type="button">
+      {uiStore.sync.getMessage() || uiStore.sync.getError() ? (
+        <div className={uiStore.sync.getError() ? 'toast toast-error' : 'toast'} role="status">
+          <span>{uiStore.sync.getError() || uiStore.sync.getMessage()}</span>
+          <button aria-label="Закрыть уведомление" onClick={() => uiStore.sync.clear()} type="button">
             ×
           </button>
         </div>

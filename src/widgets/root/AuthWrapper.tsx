@@ -18,12 +18,12 @@ export const AuthWrapper = observer(({ children }: PropsWithChildren): ReactElem
   const isProtectedRoute = protectedRoutes.some((route) => currentPathname.startsWith(route));
 
   useEffect(() => {
-    if (isProtectedRoute && userStore.hasHydrated && !userStore.isAuth) {
+    if (isProtectedRoute && userStore.sync.getHasHydrated() && !userStore.sync.getIsAuth()) {
       router.replace('/login');
     }
-  }, [isProtectedRoute, router, userStore.hasHydrated, userStore.isAuth]);
+  }, [isProtectedRoute, router, userStore.sync.getHasHydrated(), userStore.sync.getIsAuth()]);
 
-  if (isProtectedRoute && !userStore.hasHydrated) {
+  if (isProtectedRoute && !userStore.sync.getHasHydrated()) {
     return (
       <main className="auth-guard">
         <section className="auth-guard-card">
@@ -35,7 +35,7 @@ export const AuthWrapper = observer(({ children }: PropsWithChildren): ReactElem
     );
   }
 
-  if (isProtectedRoute && !userStore.isAuth) {
+  if (isProtectedRoute && !userStore.sync.getIsAuth()) {
     return (
       <main className="auth-guard">
         <section className="auth-guard-card">

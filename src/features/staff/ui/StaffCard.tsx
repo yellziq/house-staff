@@ -8,6 +8,7 @@ import { formatPrice } from '@shared/lib/formatters';
 import { rootStore } from '@shared/store/rootStore';
 import { Button } from '@shared/ui/Button';
 
+
 interface StaffCardProps {
   member: StaffMember;
 }
@@ -16,12 +17,12 @@ export const StaffCard = observer(({ member }: StaffCardProps): ReactElement => 
   const { cartStore, uiStore } = rootStore;
 
   const handleAdd = (): void => {
-    cartStore.add({
+    cartStore.sync.add({
       id: member.id,
       name: `${member.role}: ${member.name}`,
       price: member.price,
     });
-    uiStore.setMessage(`${member.name} добавлен в корзину.`);
+    uiStore.sync.setMessage(`${member.name} добавлен в корзину.`);
   };
 
   return (

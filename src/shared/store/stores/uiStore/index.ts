@@ -1,3 +1,3 @@
-export { UiStore } from './uiStore';
+export { UiStore, uiStore } from './uiStore';
 export type { UiError, UiMessage } from './types';
 export { uiStoreRoutes } from './routes';

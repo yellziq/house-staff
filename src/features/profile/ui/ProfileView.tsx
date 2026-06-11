@@ -8,6 +8,7 @@ import { homeStaffApi } from '@shared/api/homeStaffApi';
 import { rootStore } from '@shared/store/rootStore';
 import { Button } from '@shared/ui/Button';
 
+
 const interestOptions = [
   'Домработница',
   'Няня',
@@ -19,15 +20,15 @@ const interestOptions = [
 
 export const ProfileView = observer((): ReactElement => {
   const { userStore, uiStore, handleUnknownError } = rootStore;
-  const [phone, setPhone] = useState<string>(userStore.user?.phone || '');
-  const [address, setAddress] = useState<string>(userStore.user?.address || '');
-  const [interests, setInterests] = useState<string[]>(userStore.user?.interests || []);
+  const [phone, setPhone] = useState<string>(userStore.sync.getUser()?.phone || '');
+  const [address, setAddress] = useState<string>(userStore.sync.getUser()?.address || '');
+  const [interests, setInterests] = useState<string[]>(userStore.sync.getUser()?.interests || []);
 
   const handleSaveProfile = async (): Promise<void> => {
     try {
       const response = await homeStaffApi.updateProfile({ phone, address });
-      userStore.setAuth(response);
-      uiStore.setMessage('Профиль обновлен.');
+      userStore.sync.setAuth(response);
+      uiStore.sync.setMessage('Профиль обновлен.');
     } catch (error) {
       handleUnknownError(error);
     }
@@ -36,8 +37,8 @@ export const ProfileView = observer((): ReactElement => {
   const handleSaveInterests = async (): Promise<void> => {
     try {
       const response = await homeStaffApi.patchInterests({ interests });
-      userStore.setAuth(response);
-      uiStore.setMessage('Интересы обновлены.');
+      userStore.sync.setAuth(response);
+      uiStore.sync.setMessage('Интересы обновлены.');
     } catch (error) {
       handleUnknownError(error);
     }
@@ -47,8 +48,8 @@ export const ProfileView = observer((): ReactElement => {
     <section className="dashboard-grid">
       <article className="info-card">
         <p className="eyebrow">профиль</p>
-        <h1>{userStore.user?.email}</h1>
-        <p>Роль: {userStore.user?.role}</p>
+        <h1>{userStore.sync.getUser()?.email}</h1>
+        <p>Роль: {userStore.sync.getUser()?.role}</p>
         <label className="field">
           <span>Телефон</span>
           <input value={phone} onChange={(event) => setPhone(event.target.value)} />
@@ -83,7 +84,7 @@ export const ProfileView = observer((): ReactElement => {
           ))}
         </div>
         <Button onClick={handleSaveInterests}>Обновить интересы</Button>
-        <Button variant="secondary" onClick={() => userStore.logout()}>
+        <Button variant="secondary" onClick={() => userStore.sync.logout()}>
           Выйти
         </Button>
       </article>
